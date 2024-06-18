@@ -1,11 +1,31 @@
-import './App.css'
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import {Header} from './components/Header/Header';
+import GlobalStyles from './styles/GlobalStyles';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
+const App = () => {
+  
   return (
-    <div className='container'>
-      <h1>Travel Assistant Web APP</h1>
-    </div>
-  )
-}
+    <Router>
+      <GlobalStyles />
+      {/*
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/signup" element={<Signup/>} />
+        </Routes>
+      </div>*/}
+      <div className="container-fluid page-content red-border ">
+        <Home/>
+      </div>
+    </Router>
+  );
+};
 
-export default App
+export default App;
+
