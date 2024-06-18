@@ -4,10 +4,11 @@ import {ExchangeRates} from '../components/ExchangeRates/ExchangeRates';
 import SearchBar from '../components/SearchBar/SearchBar';
 import PopulationGDP from '../components/PopulationGDP/PopulationGDP';
 import WeatherForecast from '../components/WeatherForecast/WeatherForecast';
-import { Box, Flex, Grid, GridItem, border } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, GridItem, border } from "@chakra-ui/react";
 
 const Home = () => {
     const [cityData, setCityData] = useState<unknown>(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const mockCityData = {
         populationGDP: {
@@ -49,7 +50,44 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className="row">
+                
+
+                
+                <div className="row" style={{ position: 'relative' }}>
+                {!isLoggedIn && (
+                        <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                            backdropFilter: 'blur(5px)',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            flexDirection: 'column',
+                            zIndex: 1
+                        }}>
+                            <p style={{ marginBottom: '10px' }}>Faça login para visualizar essas informações</p>
+                            <Button
+                                colorScheme="blue"
+                                onClick={() => setIsLoggedIn(true)}
+                                mb={3}
+                                w="150px"
+                            >
+                               Entrar
+                            </Button>
+                            <Button
+                                colorScheme="teal"
+                                onClick={() => setIsLoggedIn(true)}
+                                w="150px"
+                            >
+                                Registar-se
+                            </Button>
+                        </div>
+                    )}
+
                     <div className="col-md-6 red-border mb-5">
                         <PopulationGDP data={cityData?.populationGDP} />
                     </div>
@@ -57,7 +95,6 @@ const Home = () => {
                         <ExchangeRates data={cityData?.exchangeRates} />
                     </div>
                 </div>
-
             </div>
         </div>
     );
