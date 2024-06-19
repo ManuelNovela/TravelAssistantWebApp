@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import DataContext from '../../services/context/DataContext';
 import { WeatherForecastDetails } from '../../services/interfaces/WeatherForecastDetails';
 import WeatherForecastItem from './WeatherForecastItem';
@@ -13,6 +13,31 @@ const WeatherForecast = () => {
       setActiveIndex(index);
     };
 
+    const [backgroundImageUrl, setBackgroundImageUrl] = useState<string>('');
+    useEffect(() => {
+        const fetchImage = async () => {
+          const apiKey = '44462409-d3a04b0fdc12a2b59ce324aae';
+          const country = contextWeatherDate?.city;
+          const url = `https://pixabay.com/api/?key=${apiKey}&q=${country}&image_type=photo`;
+    
+          try {
+            const response = await fetch(url);
+            const data = await response.json();
+            if (data.hits.length > 0) {
+              const imageUrl = data.hits[0].largeImageURL;
+              setBackgroundImageUrl(imageUrl);
+            } else {
+              console.error('Nenhuma imagem encontrada.');
+            }
+          } catch (error) {
+            console.error('Erro ao buscar imagem:', error);
+          }
+        };
+    
+        fetchImage();
+      }, [contextWeatherDate?.city]);
+
+
     return (
         <div>
             <div id="weatherCarousel" className="carousel">
@@ -22,7 +47,11 @@ const WeatherForecast = () => {
                 <div className="carousel-inner rounded-5">
                     {activeIndex === 0 && (
                         <div className="carousel-item active">
-                            <div className="d-flex justify-content-between align-items-center px-5 gradient-custom" style={{ minHeight: '200px' }}>
+                            <div className="d-flex justify-content-between align-items-center px-5 gradient-custom" 
+                            style={{ minHeight: '200px',
+                                backgroundImage: contextWeatherDate?.city?`url(${backgroundImageUrl})`:'',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center'}}>
                                 <div>
                                     <h2 className="text-dark display-2"><strong>
                                         {contextWeatherDate?.currentTemperature ? (

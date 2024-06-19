@@ -16,6 +16,11 @@ const SearchBar: React.FC<SearchBarProps> = ( props: SearchBarProps) => {
               type="text"
               value={props.city}
               onChange={(e) => props.setCity(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  props.handlerSearch();
+                }
+              }}
               placeholder="Maputo, Moçambique"
               className="form-control"
               style={{ borderTopLeftRadius: '25px', borderBottomLeftRadius: '25px', minHeight: '50px' }}
