@@ -30,7 +30,7 @@ export function PopulationGDP(){
             <div className="card-body p-4">
                 <div className="d-flex">
                     <h6 className="flex-grow-1">Dados Estatisticos do País: </h6>
-                    <h6>{country} Moçambique</h6>
+                    <h6>{country}, Moçambique</h6>
                 </div>
 
                 <div className="row d-flex text-center justify-content-center mb-4">
@@ -40,7 +40,7 @@ export function PopulationGDP(){
                             <img src={PopulationImage} width="100px" alt="Weather illustration" />
                         </div>
                         <h6 className="display-6 mb-0 font-weight-bold">{formatPopulation(contextPopulation?.value)?? "-"}</h6>
-                        <span className="small" style={{ color: '#868B94' }}>População em 2022</span>
+                        <span className="small" style={{ color: '#868B94' }}>População em {contextPopulation?.year}</span>
                     </div>
 
                     <div className="col-md-8 col-lg-6 col-xl-5 justify-content-center red-border mt-3 mb-2">
@@ -48,7 +48,7 @@ export function PopulationGDP(){
                             <img src={GdpImage} width="100px" alt="Weather illustration" />
                         </div>
                         <h6 className="display-6 mb-0 font-weight-bold">{formatPopulation(contextGDP?.value)?? "-"}</h6>
-                        <span className="small" style={{ color: '#868B94' }}>PIB de {contextPopulation?.year} em USD</span>
+                        <span className="small" style={{ color: '#868B94' }}>PIB de {contextGDP?.year} em USD</span>
                     </div>
 
                 </div>

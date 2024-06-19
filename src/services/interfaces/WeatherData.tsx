@@ -1,4 +1,5 @@
 export interface WeatherData {
+    country: string;
     cityId: number;
     city: string;
     currentTemperature: number;
