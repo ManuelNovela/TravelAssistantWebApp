@@ -3,7 +3,7 @@ import { useQuery, UseQueryResult } from 'react-query';
 import { ApiResponse } from './interfaces/ApiResponse';
 import { WeatherData } from './interfaces/WeatherData';
 import { WeatherForecast } from './interfaces/WeatherForecast';
-import { ExchangeRateData } from './interfaces/ExchangeRateData ';
+import { ExchangeRateData } from './interfaces/ExchangeRateData';
 
 const api = axios.create({
   baseURL: 'http://localhost:5000/api/v1',

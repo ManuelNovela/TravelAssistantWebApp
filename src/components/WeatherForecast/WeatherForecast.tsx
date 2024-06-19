@@ -25,8 +25,13 @@ const WeatherForecast = ( props: WeatherData) => {
                         <div className="carousel-item active">
                             <div className="d-flex justify-content-between align-items-center px-5 gradient-custom" style={{ minHeight: '230px' }}>
                                 <div>
-                                    <h2 className="text-dark display-2"><strong>{contextWeatherDate?.currentTemperature} °C</strong></h2>
-                                    <p className="text-dark mb-0">{contextWeatherDate?.city}, Portugal{contextForecastDate?.city}</p>
+                                    <h2 className="text-dark display-2"><strong>
+                                        {contextWeatherDate?.currentTemperature ? (
+                                            <>{Math.round(contextWeatherDate.currentTemperature)}</>
+                                            ) : (
+                                            <>-</>
+                                            )} °C</strong></h2>
+                                    <p className="text-dark mb-0">{contextWeatherDate?.city}, </p>
                                 </div>
                                 <div>
                                     <img
