@@ -4,12 +4,13 @@ import { WeatherForecast } from '../interfaces/WeatherForecast';
 import { fetchExchangeRate, fetchPopulation, fetchPopulationGDP, fetchWeatherForecast, isTokenValid} from '../api';
 import { ExchangeRateData } from '../interfaces/ExchangeRateData';
 import { PopulationData } from '../interfaces/PopulationData';
-import { getCurrencyByCountryCode } from '../helpers/Mapper';
+import { getCountryNameByCode, getCurrencyByCountryCode } from '../helpers/Mapper';
 
 const DataContext = createContext();
 export const DataProvider = ({ children }) => {
 
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [countryName, setCountryName] = useState<string>("");
     const [baseCurrency, setBaseCurrency] = useState<string>("MZN");
     const [countryCurrency, setCountryCurrency] = useState<string>("USD");
     const [country, setCountry] = useState<string>("");
@@ -28,32 +29,37 @@ export const DataProvider = ({ children }) => {
     const handleCityChange = async (data: WeatherData) => {
         setContextWeatherDate(data)
         setCountry(data.country);
+        setCountryName(getCountryNameByCode(data.country)?? "");
+        const currency = getCurrencyByCountryCode(data.country)?? "USD";
+        
 
         setContextPopulationDate(null);
         setContextForecastDate(null);
         setContextGDP(null);
 
         const response = await fetchWeatherForecast(data.cityId);
-        const population = await fetchPopulation(data.country);
-        const gdp = await fetchPopulationGDP(data.country);
+        setContextForecastDate(response);
 
-        const currency = getCurrencyByCountryCode(data.country)?? "USD";
-        const exchange = await fetchExchangeRate(currency, baseCurrency);
-        
         console.log(currency)
         console.log(data.city)
         console.log(data.cityId)
         console.log(data.country)
         console.log(country);
-        console.log(gdp)
         console.log(response);
-        console.log(population)
 
-        setContextPopulationDate(population);
-        setContextForecastDate(response);
-        setContextExchangeDate(exchange);
-        setContextGDP(gdp);
-        
+        if(isLoggedIn){
+          const population = await fetchPopulation(data.country);
+          console.log(population)
+          setContextPopulationDate(population);
+          
+          
+          const gdp = await fetchPopulationGDP(data.country);
+          console.log(gdp)
+          setContextGDP(gdp);
+          
+          const exchange = await fetchExchangeRate(currency, baseCurrency);
+          setContextExchangeDate(exchange);
+        } 
     };
 
     return (
@@ -75,6 +81,8 @@ export const DataProvider = ({ children }) => {
                 handleCityChange,
                 contextPopulation,
                 setContextPopulationDate,
+                countryName, 
+                setCountryName,
                 contextGDP, 
                 setContextGDP
             }}>

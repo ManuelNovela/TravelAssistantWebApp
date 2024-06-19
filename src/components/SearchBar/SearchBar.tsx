@@ -26,7 +26,7 @@ const SearchBar: React.FC<SearchBarProps> = ( props: SearchBarProps) => {
                 onClick={() => props.handlerSearch()}
                 style={{ borderTopRightRadius: '25px', borderBottomRightRadius: '25px', minHeight: '50px'  }}
               >
-                Search
+                  Pesquisar  
               </button>
             </div>
           </div>

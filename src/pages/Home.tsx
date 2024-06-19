@@ -12,7 +12,7 @@ import AuthModal from "../components/AuthModal/AuthModal";
 
 const Home = () => {
     const {isLoggedIn, setContextWeatherDate, handleCityChange} = useContext(DataContext);
-    const [city, setCity] = useState<string>('Maputo');
+    const [city, setCity] = useState<string>('');
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showLogin, setShowLogin] = useState<boolean>(false);
 
@@ -22,10 +22,8 @@ const Home = () => {
     }
     
     const {data, isLoading, isError, refetch } = useQuery(['weather', city], () => fetchWeather(city), {
-        enabled: true,
+        enabled: false,
     });
-    
-    refetch();
 
     const handleSearch = async () => {
         await refetch();

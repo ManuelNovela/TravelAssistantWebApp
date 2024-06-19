@@ -6,7 +6,7 @@ import DataContext from '../../services/context/DataContext';
 
 export function PopulationGDP(){
 
-    const {contextPopulation, contextGDP, country} = useContext(DataContext);
+    const {contextPopulation, contextGDP, country, countryName} = useContext(DataContext);
 
     const formatPopulation = (value: number | null | undefined): string => {
         if (value == null || value === undefined) {
@@ -30,7 +30,7 @@ export function PopulationGDP(){
             <div className="card-body p-4">
                 <div className="d-flex">
                     <h6 className="flex-grow-1">Dados Estatisticos do País: </h6>
-                    <h6>{country}, Moçambique</h6>
+                    <h6>{countryName}</h6>
                 </div>
 
                 <div className="row d-flex text-center justify-content-center mb-4">
