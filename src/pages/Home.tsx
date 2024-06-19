@@ -8,6 +8,7 @@ import {Button} from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { fetchWeather} from "../services/api";
 import DataContext from "../services/context/DataContext";
+import AuthModal from "../components/AuthModal/AuthModal";
 
 const Home = () => {
     const {isLoggedIn, setContextWeatherDate, handleCityChange} = useContext(DataContext);
@@ -38,6 +39,7 @@ const Home = () => {
             <div className="col-md-12">
                 <div className="row">
                     <div className="col-md-12">
+                        <AuthModal/>
                         <h1>Travel Assistant</h1>
                     </div>
                 </div>
