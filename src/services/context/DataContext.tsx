@@ -8,7 +8,7 @@ import { PopulationData } from '../interfaces/PopulationData';
 const DataContext = createContext();
 export const DataProvider = ({ children }) => {
 
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [baseCurrency, setBaseCurrency] = useState<string>("USD");
     const [countryCurrency, setCountryCurrency] = useState<string>("MZN");
     const [country, setCountry] = useState<string>("");

@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react';
 import DataContext from '../../services/context/DataContext';
-import { WeatherData } from '../../services/interfaces/WeatherData';
 import { WeatherForecastDetails } from '../../services/interfaces/WeatherForecastDetails';
 import WeatherForecastItem from './WeatherForecastItem';
 
-const WeatherForecast = ( props: WeatherData) => {
+const WeatherForecast = () => {
 
     const {contextWeatherDate, contextForecastDate} = useContext(DataContext);
 

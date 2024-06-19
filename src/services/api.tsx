@@ -90,10 +90,14 @@ export const login = async (email: string, password: string): Promise<string> =>
       email,
       password,
     });
+
+
+    console.log(response);
     
     const { status, message, data } = response.data;
 
     if (status !== 'SUCCESS') {
+
       throw new Error(message || 'Login failed');
     }
 
@@ -101,7 +105,7 @@ export const login = async (email: string, password: string): Promise<string> =>
     saveToken(token);
     return token;
   } catch (error) {
-    throw new Error('Login failed: ' + error.message);
+     throw new Error('Login failed: ' + error.response?.data?.message ?? error.message);
   }
 };
 
@@ -120,10 +124,11 @@ export const register = async (username: string, email: string, password: string
     }
 
     const { token } = data;
+    console.log(token);
     saveToken(token);
 
     return token;
   } catch (error) {
-    throw new Error('Registration failed: ' + error.message);
+    throw new Error('Registration failed: ' + error.response?.data?.message ?? error.message);
   }
 };

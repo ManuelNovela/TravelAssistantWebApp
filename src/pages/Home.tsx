@@ -13,7 +13,13 @@ import AuthModal from "../components/AuthModal/AuthModal";
 const Home = () => {
     const {isLoggedIn, setContextWeatherDate, handleCityChange} = useContext(DataContext);
     const [city, setCity] = useState<string>('');
-    const [cityData, setCityData] = useState<unknown>(null);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [showLogin, setShowLogin] = useState<boolean>(false);
+
+    const handlerShowLogin = (toLogin:boolean) =>{
+        setShowLogin(toLogin);
+        setShowModal(true);
+    }
     
     const {data, isLoading, isError, refetch } = useQuery(['weather', city], () => fetchWeather(city), {
         enabled: false,
@@ -37,10 +43,10 @@ const Home = () => {
     return (
         <div className="row">
             <div className="col-md-12">
+                <AuthModal showLogin={showLogin} showModal={showModal} setShowModal={setShowModal}/>
                 <div className="row">
                     <div className="col-md-12">
-                        <AuthModal/>
-                        <h1>Travel Assistant</h1>
+                        <h1>Assistente de Viagem</h1>
                     </div>
                 </div>
                 <div className="row">
@@ -49,13 +55,13 @@ const Home = () => {
                     </div>
                 </div>
 
+
                 <div className="row">
                     <div className="col-md-12 mb-5 red-border">
-                        <WeatherForecast city={"asd"} cityId={1} currentDescription={""} currentTemperature={1} />
+                        <WeatherForecast/>
+                        
                     </div>
                 </div>
-
-                
 
                 
                 <div className="row" style={{ position: 'relative' }}>
@@ -74,18 +80,21 @@ const Home = () => {
                             flexDirection: 'column',
                             zIndex: 1
                         }}>
+                            
                             <p style={{ marginBottom: '10px' }}>Faça login para visualizar essas informações</p>
                             <Button
+                                className="btn btn-secondary"
                                 colorScheme="blue"
-                                onClick={() => setIsLoggedIn(true)}
+                                onClick={() => handlerShowLogin(true)}
                                 mb={3}
                                 w="150px"
                             >
                                Entrar
                             </Button>
                             <Button
+                                className="btn btn-secondary"
                                 colorScheme="teal"
-                                onClick={() => setIsLoggedIn(true)}
+                                onClick={() => handlerShowLogin(false)}
                                 w="150px"
                             >
                                 Registar-se
