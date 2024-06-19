@@ -4,30 +4,25 @@ import {ExchangeRates} from '../components/ExchangeRates/ExchangeRates';
 import SearchBar from '../components/SearchBar/SearchBar';
 import PopulationGDP from '../components/PopulationGDP/PopulationGDP';
 import WeatherForecast from '../components/WeatherForecast/WeatherForecast';
-import { Box, Button, Flex, Grid, GridItem, border } from "@chakra-ui/react";
+import {Button} from "@chakra-ui/react";
+import { useQuery } from "react-query";
+import { fetchWeather } from "../services/api";
 
 const Home = () => {
+
+    const [city, setCity] = useState<string>('');
+
     const [cityData, setCityData] = useState<unknown>(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const mockCityData = {
-        populationGDP: {
-        population: 1000000,
-        gdp: 50000,
-        },
-        weather: {
-        temp: 25,
-        condition: 'Sunny',
-        },
-        exchangeRates: {
-        base: 'USD',
-        rate: 1.2,
-        target: 'EUR',
-        },
-    };
+    const {data, isLoading, isError, refetch } = useQuery(['weather', city], () => fetchWeather(city), {
+        enabled: false,
+    });
 
-    const handleSearch = () => {
-        setCityData(mockCityData);
+    const handleSearch = async () => {
+        await refetch();
+        console.log(data);
+
     };
    
     return (
@@ -40,13 +35,13 @@ const Home = () => {
                 </div>
                 <div className="row">
                     <div className="col-md-12 red-border">
-                        <SearchBar onSearch={handleSearch} />
+                        <SearchBar setCity={setCity} city={city} handlerSearch={handleSearch} />
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col-md-12 mb-5 red-border">
-                        <WeatherForecast data={cityData?.weather} />
+                        <WeatherForecast {...data} />
                     </div>
                 </div>
 

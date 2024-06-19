@@ -1,25 +1,20 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import { WeatherData } from '../../services/api';
 
-const Section = styled.section`
-  margin: 1rem 0;
-`;
+const WeatherForecast = ( props: WeatherData) => {
 
-interface WeatherForecastProps {
-  data?: {
-    temp: number;
-    condition: string;
-  };
-}
+    console.log(props);
+    console.log(props.currentTemperature);
+    console.log(props);
 
-const WeatherForecast: React.FC<WeatherForecastProps> = ({ data }) => {
+
     const [activeIndex, setActiveIndex] = useState(0);
 
     const handleButtonClick = (index: number) => {
       setActiveIndex(index);
     };
     return (
-        <Section>
+        <div>
             <div id="weatherCarousel" className="carousel">
 
                 <div className="d-flex">
@@ -31,8 +26,8 @@ const WeatherForecast: React.FC<WeatherForecastProps> = ({ data }) => {
                         <div className="carousel-item active">
                             <div className="d-flex justify-content-between align-items-center px-5 gradient-custom" style={{ minHeight: '230px' }}>
                                 <div>
-                                    <h2 className="text-dark display-2"><strong>23°C</strong></h2>
-                                    <p className="text-dark mb-0">Coimbra, Portugal</p>
+                                    <h2 className="text-dark display-2"><strong>{props.currentTemperature} °C</strong></h2>
+                                    <p className="text-dark mb-0">{props.city}, Portugal</p>
                                 </div>
                                 <div>
                                     <img
@@ -153,7 +148,7 @@ const WeatherForecast: React.FC<WeatherForecastProps> = ({ data }) => {
                     </span>
                 </div>
             </div>
-        </Section>
+        </div>
     );
 };
 
