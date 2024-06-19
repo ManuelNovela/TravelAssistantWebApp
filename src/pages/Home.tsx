@@ -6,16 +6,14 @@ import PopulationGDP from '../components/PopulationGDP/PopulationGDP';
 import WeatherForecast from '../components/WeatherForecast/WeatherForecast';
 import {Button} from "@chakra-ui/react";
 import { useQuery } from "react-query";
-import { fetchWeather } from "../services/api";
+import { fetchWeather} from "../services/api";
 import DataContext from "../services/context/DataContext";
 
 const Home = () => {
-    const {isLoggedIn, setContextWeatherDate} = useContext(DataContext);
+    const {isLoggedIn, setContextWeatherDate, handleCityChange} = useContext(DataContext);
     const [city, setCity] = useState<string>('');
-    
     const [cityData, setCityData] = useState<unknown>(null);
     
-
     const {data, isLoading, isError, refetch } = useQuery(['weather', city], () => fetchWeather(city), {
         enabled: false,
     });
@@ -23,14 +21,16 @@ const Home = () => {
     const handleSearch = async () => {
         await refetch();
         console.log(data);
-        setContextWeatherDate(data);
+        //setContextWeatherDate(data);
     };
 
     useEffect(() => {
         if (data) {
-          setContextWeatherDate(data);
+          //setContextWeatherDate(data);
+          handleCityChange(data);
         }
       }, [data, isLoading, isError]);
+      
 
    
     return (
@@ -49,7 +49,7 @@ const Home = () => {
 
                 <div className="row">
                     <div className="col-md-12 mb-5 red-border">
-                        <WeatherForecast {...data} />
+                        <WeatherForecast city={"asd"} cityId={1} currentDescription={""} currentTemperature={1} />
                     </div>
                 </div>
 

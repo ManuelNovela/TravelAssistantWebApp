@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { WeatherData } from '../interfaces/WeatherData';
 import { WeatherForecast } from '../interfaces/WeatherForecast';
-import { useWeatherForecastQuery } from '../api';
+import { fetchWeatherForecast, useWeatherForecastQuery } from '../api';
 
 const DataContext = createContext();
 export const DataProvider = ({ children }) => {
@@ -11,12 +11,13 @@ export const DataProvider = ({ children }) => {
     const [contextWeatherDate, setContextWeatherDate] = useState<WeatherData>(null);
     const [contextForecastDate, setContextForecastDate] = useState<WeatherForecast>(null);
 
-    
-    //const {data} = useWeatherForecastQuery(contextWeatherDate.cityId);
-    useEffect(() => {
-        console.log("mmmmm")
-        console.log(contextWeatherDate)
-    }, [contextWeatherDate]);
+
+    const handleCityChange = async (data: WeatherData) => {
+        setContextWeatherDate(data)
+        const response = await  fetchWeatherForecast(data.cityId);
+        console.log(response);
+        setContextForecastDate(response);
+    };
 
 
     return (
@@ -26,7 +27,8 @@ export const DataProvider = ({ children }) => {
                 contextWeatherDate,
                 setContextWeatherDate,     
                 contextForecastDate, 
-                setContextForecastDate
+                setContextForecastDate,
+                handleCityChange
             }}>
             {children}
         </DataContext.Provider>

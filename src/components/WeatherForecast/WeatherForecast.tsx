@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
 import DataContext from '../../services/context/DataContext';
 import { WeatherData } from '../../services/interfaces/WeatherData';
+import { WeatherForecastDetails } from '../../services/interfaces/WeatherForecastDetails';
+import WeatherForecastItem from './WeatherForecastItem';
 
 const WeatherForecast = ( props: WeatherData) => {
 
-    const {contextWeatherDate} = useContext(DataContext);
+    const {contextWeatherDate, contextForecastDate} = useContext(DataContext);
 
     const [activeIndex, setActiveIndex] = useState(0);
-
     const handleButtonClick = (index: number) => {
       setActiveIndex(index);
     };
@@ -25,7 +26,7 @@ const WeatherForecast = ( props: WeatherData) => {
                             <div className="d-flex justify-content-between align-items-center px-5 gradient-custom" style={{ minHeight: '230px' }}>
                                 <div>
                                     <h2 className="text-dark display-2"><strong>{contextWeatherDate?.currentTemperature} °C</strong></h2>
-                                    <p className="text-dark mb-0">{contextWeatherDate?.city}, Portugal</p>
+                                    <p className="text-dark mb-0">{contextWeatherDate?.city}, Portugal{contextForecastDate?.city}</p>
                                 </div>
                                 <div>
                                     <img
@@ -40,36 +41,11 @@ const WeatherForecast = ( props: WeatherData) => {
                     {activeIndex === 1 && (
                     <div className="carousel-item active">
                     <div className="d-flex flex-wrap justify-content-around text-center align-items-center px-5 bg-body-tertiary" style={{ minHeight: '230px' }}>
-                        <div className="flex-column col-12 col-md-auto mb-3 item">
-                            <p className="small"><strong>21°C</strong></p>
-                            <i className="fas fa-sun fa-2x mb-3" style={{ color: '#ddd' }}></i>
-                            <p className="mb-0"><strong>12:00</strong></p>
-                            <p className="mb-0 text-muted" style={{ fontSize: '.65rem' }}>PM</p>
-                        </div>
-                        <div className="flex-column col-12 col-md-auto mb-3 item">
-                            <p className="small"><strong>2°C</strong></p>
-                            <i className="fas fa-sun fa-2x mb-3" style={{ color: '#ddd' }}></i>
-                            <p className="mb-0"><strong>1:00</strong></p>
-                            <p className="mb-0 text-muted" style={{ fontSize: '.65rem' }}>PM</p>
-                        </div>
-                        <div className="flex-column col-12 col-md-auto mb-3 item">
-                            <p className="small"><strong>20°C</strong></p>
-                            <i className="fas fa-cloud fa-2x mb-3" style={{ color: '#ddd' }}></i>
-                            <p className="mb-0"><strong>2:00</strong></p>
-                            <p className="mb-0 text-muted" style={{ fontSize: '.65rem' }}>PM</p>
-                        </div>
-                        <div className="flex-column col-12 col-md-auto mb-3 item">
-                            <p className="small"><strong>19°C</strong></p>
-                            <i className="fas fa-cloud fa-2x mb-3" style={{ color: '#ddd' }}></i>
-                            <p className="mb-0"><strong>3:00</strong></p>
-                            <p className="mb-0 text-muted" style={{ fontSize: '.65rem' }}>PM</p>
-                        </div>
-                        <div className="flex-column col-12 col-md-auto mb-3 item">
-                            <p className="small"><strong>18°C</strong></p>
-                            <i className="fas fa-cloud-showers-heavy fa-2x mb-3 item" style={{ color: '#ddd' }}></i>
-                            <p className="mb-0"><strong>4:00</strong></p>
-                            <p className="mb-0 text-muted" style={{ fontSize: '.65rem' }}>PM</p>
-                        </div>
+                        
+                    {contextForecastDate?.forecastToday?.map((detail: WeatherForecastDetails, index: number) => (
+                        <WeatherForecastItem {...detail} key={index}/>
+                    ))}
+
                     </div>
                 </div>
                 
