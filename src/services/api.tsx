@@ -124,7 +124,6 @@ export const register = async (username: string, email: string, password: string
     }
 
     const { token } = data;
-    console.log(token);
     saveToken(token);
 
     return token;

@@ -1,23 +1,32 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { login, register } from '../../services/api';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { Input } from '@chakra-ui/react';
+import DataContext from '../../services/context/DataContext';
 
 interface AuthModalProps {
   showLogin: boolean;
   showModal: boolean;
-  setShowModal: (value:boolean) => void;
+  setShowModal: (value: boolean) => void;
 }
 
-const AuthModal = (props: AuthModalProps) => {
+const AuthModal: React.FC<AuthModalProps> = ({
+  showLogin,
+  showModal,
+  setShowModal,
+}: AuthModalProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
 
+  const { setIsLoggedIn } = useContext(DataContext);
+
   const handleLogin = async () => {
     try {
       await login(email, password);
+      setIsLoggedIn(true);
+      setShowModal(false); 
     } catch (error) {
       setError(error.message);
     }
@@ -26,37 +35,40 @@ const AuthModal = (props: AuthModalProps) => {
   const handleRegister = async () => {
     try {
       await register(username, email, password);
+      setIsLoggedIn(true);
+      setShowModal(false); 
     } catch (error) {
       setError(error.message);
     }
   };
 
-  const handlerSubmit = async () => {
-    if(props.showLogin){
-      await handleLogin()
-    }else{
-      await handleRegister()
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (showLogin) {
+      await handleLogin();
+    } else {
+      await handleRegister();
     }
   };
 
-  const handleOnHIde = async () => {
-    props.setShowModal(false);
+  const handleClose = () => {
+    setShowModal(false); // Fechar o modal ao clicar no botão de fechar
   };
 
   return (
-    <Modal show={props.showModal} onHide={() => handleOnHIde()} centered>
+    <Modal show={showModal} onHide={handleClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>{props.showLogin ? "Entrar" : "Cadastrar-se"}</Modal.Title>
+        <Modal.Title>{showLogin ? 'Entrar' : 'Cadastrar-se'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div>
-          {!props.showLogin && (
+        <form onSubmit={handleSubmit}>
+          {!showLogin && (
             <Input
               type="text"
               id="username"
               name="username"
               className="auth-input form-control mb-2"
-              placeholder="Nome de Usuario"
+              placeholder="Nome de Usuário"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -77,22 +89,20 @@ const AuthModal = (props: AuthModalProps) => {
           <Input
             type="password"
             id="password"
-            name="Senha"
+            name="password"
             className="auth-input form-control mb-3"
-            placeholder="Password"
+            placeholder="Senha"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <p style={{color:'red'}} className='mb-2'>{error}</p>
-          <Button
-            type="submit" 
-            className="btn btn-secondary w-100"
-            onClick={handlerSubmit}>
-            Entrar
+          <p style={{ color: 'red' }} className="mb-2">
+            {error}
+          </p>
+          <Button type="submit" className="btn btn-secondary w-100">
+            {showLogin ? 'Entrar' : 'Cadastrar'}
           </Button>
-          
-        </div>
+        </form>
       </Modal.Body>
     </Modal>
   );
