@@ -1,10 +1,9 @@
 import { useContext } from 'react';
 import ExchangeImage from '../../assets/images/exchange.png';
 import DataContext from '../../services/context/DataContext';
-import { ExchangeRateData } from '../../services/interfaces/ExchangeRateData';
 
 
-export function ExchangeRates(props :  ExchangeRateData ){
+export function ExchangeRates(){
 
     const {contextExchangeDate, baseCurrency, countryCurrency} = useContext(DataContext);
     

@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import {ExchangeRates} from '../components/ExchangeRates/ExchangeRates';
 import SearchBar from '../components/SearchBar/SearchBar';
-import PopulationGDP from '../components/PopulationGDP/PopulationGDP';
+import {PopulationGDP} from '../components/PopulationGDP/PopulationGDP';
 import WeatherForecast from '../components/WeatherForecast/WeatherForecast';
 import {Button} from "@chakra-ui/react";
 import { useQuery } from "react-query";
@@ -94,10 +94,10 @@ const Home = () => {
                     )}
 
                     <div className="col-md-6 red-border mb-5">
-                        <PopulationGDP data={cityData?.populationGDP} />
+                        <PopulationGDP/>
                     </div>
                     <div className="col-md-6 red-border mb-5">
-                        <ExchangeRates data={cityData?.exchangeRates} />
+                        <ExchangeRates/>
                     </div>
                 </div>
             </div>

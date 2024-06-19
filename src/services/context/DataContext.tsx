@@ -1,8 +1,9 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { WeatherData } from '../interfaces/WeatherData';
 import { WeatherForecast } from '../interfaces/WeatherForecast';
-import { fetchExchangeRate, fetchWeatherForecast, useWeatherForecastQuery } from '../api';
+import { fetchPopulation, fetchPopulationGDP, fetchWeatherForecast} from '../api';
 import { ExchangeRateData } from '../interfaces/ExchangeRateData';
+import { PopulationData } from '../interfaces/PopulationData';
 
 const DataContext = createContext();
 export const DataProvider = ({ children }) => {
@@ -10,9 +11,12 @@ export const DataProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
     const [baseCurrency, setBaseCurrency] = useState<string>("USD");
     const [countryCurrency, setCountryCurrency] = useState<string>("MZN");
+    const [country, setCountry] = useState<string>("MZ");
     const [contextWeatherDate, setContextWeatherDate] = useState<WeatherData>(null);
     const [contextForecastDate, setContextForecastDate] = useState<WeatherForecast>(null);
     const [contextExchangeDate, setContextExchangeDate] = useState<ExchangeRateData>(null);
+    const [contextPopulation, setContextPopulationDate] = useState<PopulationData>(null);
+    const [contextGDP, setContextGDP] = useState<PopulationData>(null);
 
 
     const handleCityChange = async (data: WeatherData) => {
@@ -20,17 +24,19 @@ export const DataProvider = ({ children }) => {
         const response = await fetchWeatherForecast(data.cityId);
         console.log(response);
         setContextForecastDate(response);
-        //pegar a moeda do pais
-        const currency = await fetchExchangeRate(baseCurrency,countryCurrency);
-        setContextExchangeDate(currency);
+        const population = await fetchPopulation(country);
+        setContextPopulationDate(population);
+        const gdp = await fetchPopulationGDP(country);
+        setContextGDP(gdp);
     };
-
 
     return (
         <DataContext.Provider value={{ 
                 isLoggedIn, 
                 setIsLoggedIn,
                 baseCurrency,
+                country, 
+                setCountry,
                 setBaseCurrency,
                 countryCurrency, 
                 setCountryCurrency,
@@ -40,7 +46,11 @@ export const DataProvider = ({ children }) => {
                 setContextForecastDate,
                 contextExchangeDate,
                 setContextExchangeDate,
-                handleCityChange
+                handleCityChange,
+                contextPopulation,
+                setContextPopulationDate,
+                contextGDP, 
+                setContextGDP
             }}>
             {children}
         </DataContext.Provider>

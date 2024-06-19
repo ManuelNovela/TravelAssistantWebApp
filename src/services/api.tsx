@@ -4,6 +4,7 @@ import { ApiResponse } from './interfaces/ApiResponse';
 import { WeatherData } from './interfaces/WeatherData';
 import { WeatherForecast } from './interfaces/WeatherForecast';
 import { ExchangeRateData } from './interfaces/ExchangeRateData';
+import { PopulationData } from './interfaces/PopulationData';
 
 const api = axios.create({
   baseURL: 'http://localhost:5000/api/v1',
@@ -43,6 +44,36 @@ export const useWeatherQuery = (city: string): UseQueryResult<WeatherData, Error
 
 export const useWeatherForecastQuery = (cityId: number): UseQueryResult<WeatherForecast, Error> => {
   return useQuery(['weatherForecast', cityId], () => fetchWeatherForecast(cityId), {enabled: !!cityId});
+};
+
+export const fetchPopulation = async (countryCode: string): Promise<PopulationData> => {
+  const response = await api.get<ApiResponse<PopulationData[]>>(`/population/${countryCode}`);
+
+  const validData = response.data.data.filter(entry => entry.value !== null);
+
+  if (validData.length === 0) {
+    throw new Error('No valid population data available');
+    }
+    const mostRecentData = validData.reduce((latest, entry) =>
+    latest.year > entry.year ? latest : entry
+  );
+
+return mostRecentData;
+};
+
+export const fetchPopulationGDP = async (countryCode: string): Promise<PopulationData> => {
+    const response = await api.get<ApiResponse<PopulationData[]>>(`/gdp/${countryCode}`);
+
+    const validData = response.data.data.filter(entry => entry.value !== null);
+
+    if (validData.length === 0) {
+      throw new Error('No valid population data available');
+      }
+      const mostRecentData = validData.reduce((latest, entry) =>
+      latest.year > entry.year ? latest : entry
+    );
+
+  return mostRecentData;
 };
 
 export const saveToken = (token: string) => {

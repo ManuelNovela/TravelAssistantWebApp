@@ -1,24 +1,36 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PopulationImage from '../../assets/images/population.png';
 import GdpImage from '../../assets/images/gdp.png';
+import DataContext from '../../services/context/DataContext';
 
 
+export function PopulationGDP(){
 
-interface PopulationGDPProps {
-  data?: {
-    population: number;
-    gdp: number;
-  };
-}
+    const {contextPopulation, contextGDP, country} = useContext(DataContext);
 
-const PopulationGDP: React.FC<PopulationGDPProps> = ({ data }) => {
- 
+    const formatPopulation = (value: number | null | undefined): string => {
+        if (value == null || value === undefined) {
+          return "-";
+        }
+      
+        if (value >= 1000000000) {
+          return (value / 1000000000).toFixed(2).replace(".", ",") + " bilhões";
+        } else if (value >= 1000000) {
+          return (value / 1000000).toFixed(2).replace(".", ",") + " milhões";
+        } else if (value >= 1000) {
+          return (value / 1000).toFixed(2).replace(".", ",") + " mil";
+        }
+      
+        return value.toString().replace(".", ",");
+    };
+
+
     return (
         <div className="card text-body" style={{ borderRadius: '35px' }}>
             <div className="card-body p-4">
                 <div className="d-flex">
                     <h6 className="flex-grow-1">Dados Estatisticos do País: </h6>
-                    <h6>Moçambique</h6>
+                    <h6>{country} Moçambique</h6>
                 </div>
 
                 <div className="row d-flex text-center justify-content-center mb-4">
@@ -27,7 +39,7 @@ const PopulationGDP: React.FC<PopulationGDPProps> = ({ data }) => {
                         <div className="d-flex flex-column justify-content-center align-items-center mt-2 mb-2">
                             <img src={PopulationImage} width="100px" alt="Weather illustration" />
                         </div>
-                        <h6 className="display-6 mb-0 font-weight-bold">32,97 milhões</h6>
+                        <h6 className="display-6 mb-0 font-weight-bold">{formatPopulation(contextPopulation?.value)?? "-"}</h6>
                         <span className="small" style={{ color: '#868B94' }}>População em 2022</span>
                     </div>
 
@@ -35,14 +47,12 @@ const PopulationGDP: React.FC<PopulationGDPProps> = ({ data }) => {
                         <div className="d-flex flex-column justify-content-center align-items-center mt-2 mb-2">
                             <img src={GdpImage} width="100px" alt="Weather illustration" />
                         </div>
-                        <h6 className="display-6 mb-0 font-weight-bold">558,30 USD</h6>
-                        <span className="small" style={{ color: '#868B94' }}>PIB per Capita em 2022</span>
+                        <h6 className="display-6 mb-0 font-weight-bold">{formatPopulation(contextGDP?.value)?? "-"}</h6>
+                        <span className="small" style={{ color: '#868B94' }}>PIB de {contextPopulation?.year} em USD</span>
                     </div>
 
                 </div>
             </div>
         </div>
     );
-};
-
-export default PopulationGDP;
+}
