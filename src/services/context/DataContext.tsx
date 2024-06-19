@@ -21,10 +21,19 @@ export const DataProvider = ({ children }) => {
     const [contextGDP, setContextGDP] = useState<PopulationData>(null);
 
     useEffect(() => {
-        if (isTokenValid()) {
+      if (isTokenValid()) {
           setIsLoggedIn(true);
+          if(isLoggedIn && contextWeatherDate?.city!=null){
+            handleCityChange(contextWeatherDate);
+          }
         }
-      }, []);
+    }, []);
+
+    useEffect(() => {
+      if(isLoggedIn && contextWeatherDate?.city!=null){
+        handleCityChange(contextWeatherDate);
+      }
+    }, [isLoggedIn]);
 
     const handleCityChange = async (data: WeatherData) => {
         setContextWeatherDate(data)

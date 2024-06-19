@@ -17,7 +17,7 @@ const WeatherForecast = () => {
     useEffect(() => {
         const fetchImage = async () => {
           const apiKey = '44462409-d3a04b0fdc12a2b59ce324aae';
-          const country = contextWeatherDate?.city;
+          const country = contextWeatherDate?.city ?? 'weather';
           const url = `https://pixabay.com/api/?key=${apiKey}&q=${country}&image_type=photo`;
     
           try {
@@ -47,35 +47,51 @@ const WeatherForecast = () => {
                 <div className="carousel-inner rounded-5">
                     {activeIndex === 0 && (
                         <div className="carousel-item active">
-                            <div className="d-flex justify-content-between align-items-center px-5 gradient-custom" 
-                            style={{ minHeight: '200px',
-                                backgroundImage: contextWeatherDate?.city?`url(${backgroundImageUrl})`:'',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center'}}>
-                                <div>
-                                    <h2 className="text-dark display-2"><strong>
-                                        {contextWeatherDate?.currentTemperature ? (
-                                            <>{Math.round(contextWeatherDate.currentTemperature)}</>
-                                            ) : (
-                                            <>-</>
-                                            )} °C</strong></h2>
-                                    <p className="text-dark mb-0">{contextWeatherDate?.city}, {countryName}</p>
-                                    <p className="text-dark mb-0">{contextWeatherDate?.description}</p>
-                                </div>
-                                <div>
-                                    <img
-                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-weather/ilu3.webp"
-                                        width="150px"
-                                        alt="Weather icon"
-                                    />
-
-                                </div>
-                            </div>
+                        <div
+                          className="d-flex justify-content-between align-items-center px-5 gradient-custom"
+                          style={{
+                            minHeight: '250px',
+                            position: 'relative',
+                            overflow: 'hidden'
+                          }}
+                        >
+                          <div
+                            style={{
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              width: '100%',
+                              height: '100%',
+                              backgroundImage: `url(${backgroundImageUrl})`,
+                              backgroundSize: 'cover',
+                              backgroundPosition: 'center',
+                              opacity: 0.7,
+                              zIndex: -1
+                            }}
+                          ></div>
+                          <div>
+                            <h2 className="text-dark display-2"><strong>
+                              {contextWeatherDate?.currentTemperature ? (
+                                <>{Math.round(contextWeatherDate?.currentTemperature)}</>
+                              ) : (
+                                <>-</>
+                              )} °C</strong></h2>
+                            <p className="text-dark mb-0">{contextWeatherDate?.city}, {countryName}</p>
+                            <p className="text-dark mb-0">{contextWeatherDate?.description}</p>
+                          </div>
+                          <div>
+                            <img
+                              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-weather/ilu3.webp"
+                              width="150px"
+                              alt="Weather icon"
+                            />
+                          </div>
                         </div>
+                      </div>
                     )}
                     {activeIndex === 1 && (
                     <div className="carousel-item active">
-                    <div className="d-flex flex-wrap justify-content-around text-center align-items-center px-5 bg-body-tertiary" style={{ minHeight: '200px' }}>
+                    <div className="d-flex flex-wrap justify-content-around text-center align-items-center px-5 bg-body-tertiary" style={{ minHeight: '250px' }}>
                         
                     {contextForecastDate?.forecastToday?.map((detail: WeatherForecastDetails, index: number) => (
                         <WeatherForecastItem {...detail} key={index}/>
@@ -87,7 +103,7 @@ const WeatherForecast = () => {
                     )}
                     {activeIndex === 2 && (
                         <div className="carousel-item active">
-                            <div className="d-flex flex-wrap justify-content-around text-center align-items-center px-5 bg-body-tertiary" style={{ minHeight: '200px' }}>
+                            <div className="d-flex flex-wrap justify-content-around text-center align-items-center px-5 bg-body-tertiary" style={{ minHeight: '250px' }}>
                                 
                                 {contextForecastDate?.forecastWeek?.map((detail: WeatherForecastDetails, index: number) => (
                                     <WeatherForecastWeakItem {...detail} key={index}/>
