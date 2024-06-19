@@ -85,6 +85,16 @@ export const removeToken = () => {
   localStorage.removeItem('token');
 };
 
+
+export const logout = async (): Promise<string> => {
+  try {
+    removeToken()
+    return "successo";
+  } catch (error) {
+     throw new Error('Login failed: ' + error.message);
+  }
+};
+
 export const login = async (email: string, password: string): Promise<string> => {
   try {
     const response = await api.post<{ status: string, message: string | null, data: { name: string, token: string } }>('/auth/login', {

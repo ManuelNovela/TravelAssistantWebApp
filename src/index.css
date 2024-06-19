@@ -28,6 +28,11 @@
   color: #5a6268;
 }
 
+.logout {
+  margin-top: 1rem;
+  margin-right: 1rem;
+}
+
 @media (max-width: 576px) {
   .item {
     border: 1px solid #ccc;
