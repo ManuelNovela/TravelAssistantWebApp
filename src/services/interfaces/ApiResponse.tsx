@@ -1,7 +1,5 @@
-import { WeatherData } from "./WeatherData";
-
-export interface ApiResponse {
+export interface ApiResponse<T> {
     status: string;
     message: string;
-    data: WeatherData;
+    data: T;
   }

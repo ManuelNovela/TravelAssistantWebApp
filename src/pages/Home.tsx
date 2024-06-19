@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {ExchangeRates} from '../components/ExchangeRates/ExchangeRates';
 import SearchBar from '../components/SearchBar/SearchBar';
 import PopulationGDP from '../components/PopulationGDP/PopulationGDP';
@@ -7,13 +7,14 @@ import WeatherForecast from '../components/WeatherForecast/WeatherForecast';
 import {Button} from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { fetchWeather } from "../services/api";
+import DataContext from "../services/context/DataContext";
 
 const Home = () => {
-
+    const {isLoggedIn, setContextWeatherDate} = useContext(DataContext);
     const [city, setCity] = useState<string>('');
-
+    
     const [cityData, setCityData] = useState<unknown>(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    
 
     const {data, isLoading, isError, refetch } = useQuery(['weather', city], () => fetchWeather(city), {
         enabled: false,
@@ -22,8 +23,15 @@ const Home = () => {
     const handleSearch = async () => {
         await refetch();
         console.log(data);
-
+        setContextWeatherDate(data);
     };
+
+    useEffect(() => {
+        if (data) {
+          setContextWeatherDate(data);
+        }
+      }, [data, isLoading, isError]);
+
    
     return (
         <div className="row">

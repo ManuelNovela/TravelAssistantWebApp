@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { WeatherData } from '../../services/api';
+import React, { useContext, useState } from 'react';
+import DataContext from '../../services/context/DataContext';
+import { WeatherData } from '../../services/interfaces/WeatherData';
 
 const WeatherForecast = ( props: WeatherData) => {
 
-    console.log(props);
-    console.log(props.currentTemperature);
-    console.log(props);
-
+    const {contextWeatherDate} = useContext(DataContext);
 
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -26,8 +24,8 @@ const WeatherForecast = ( props: WeatherData) => {
                         <div className="carousel-item active">
                             <div className="d-flex justify-content-between align-items-center px-5 gradient-custom" style={{ minHeight: '230px' }}>
                                 <div>
-                                    <h2 className="text-dark display-2"><strong>{props.currentTemperature} °C</strong></h2>
-                                    <p className="text-dark mb-0">{props.city}, Portugal</p>
+                                    <h2 className="text-dark display-2"><strong>{contextWeatherDate?.currentTemperature} °C</strong></h2>
+                                    <p className="text-dark mb-0">{contextWeatherDate?.city}, Portugal</p>
                                 </div>
                                 <div>
                                     <img
