@@ -35,7 +35,7 @@ export function PopulationGDP(){
 
                 <div className="row d-flex text-center justify-content-center mb-4">
                     
-                    <div className="col-md-8 col-lg-6 col-xl-5 justify-content-center red-border mt-3 mb-2">
+                    <div className="col-md-8 col-lg-6 col-xl-5 justify-content-center mt-3 mb-2">
                         <div className="d-flex flex-column justify-content-center align-items-center mt-2 mb-2">
                             <img src={PopulationImage} width="100px" alt="Weather illustration" />
                         </div>
@@ -43,7 +43,7 @@ export function PopulationGDP(){
                         <span className="small" style={{ color: '#868B94' }}>População em {contextPopulation?.year}</span>
                     </div>
 
-                    <div className="col-md-8 col-lg-6 col-xl-5 justify-content-center red-border mt-3 mb-2">
+                    <div className="col-md-8 col-lg-6 col-xl-5 justify-content-center mt-3 mb-2">
                         <div className="d-flex flex-column justify-content-center align-items-center mt-2 mb-2">
                             <img src={GdpImage} width="100px" alt="Weather illustration" />
                         </div>

@@ -23,6 +23,7 @@ api.interceptors.request.use(
   }
 );
 
+
 export const fetchExchangeRate = async (baseCurrency: string, targetCurrency: string): Promise<ExchangeRateData> => {
   const response = await api.get<ApiResponse<ExchangeRateData>>(`/exchangerate/${baseCurrency}/${targetCurrency}`);
   return response.data.data;
@@ -106,6 +107,21 @@ export const login = async (email: string, password: string): Promise<string> =>
     return token;
   } catch (error) {
      throw new Error('Login failed: ' + error.response?.data?.message ?? error.message);
+  }
+};
+
+export const isTokenValid = () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return false;
+  }
+
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const currentTime = Math.floor(Date.now() / 1000);
+    return payload.exp > currentTime;
+  } catch (e) {
+    return false;
   }
 };
 

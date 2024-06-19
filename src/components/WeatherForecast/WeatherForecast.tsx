@@ -15,14 +15,12 @@ const WeatherForecast = () => {
         <div>
             <div id="weatherCarousel" className="carousel">
 
-                <div className="d-flex">
-                    <h6 className="flex-grow-1">Temperatura</h6>
-                </div>
+                
 
                 <div className="carousel-inner rounded-5">
                     {activeIndex === 0 && (
                         <div className="carousel-item active">
-                            <div className="d-flex justify-content-between align-items-center px-5 gradient-custom" style={{ minHeight: '230px' }}>
+                            <div className="d-flex justify-content-between align-items-center px-5 gradient-custom" style={{ minHeight: '150px' }}>
                                 <div>
                                     <h2 className="text-dark display-2"><strong>
                                         {contextWeatherDate?.currentTemperature ? (
@@ -44,7 +42,7 @@ const WeatherForecast = () => {
                     )}
                     {activeIndex === 1 && (
                     <div className="carousel-item active">
-                    <div className="d-flex flex-wrap justify-content-around text-center align-items-center px-5 bg-body-tertiary" style={{ minHeight: '230px' }}>
+                    <div className="d-flex flex-wrap justify-content-around text-center align-items-center px-5 bg-body-tertiary" style={{ minHeight: '150px' }}>
                         
                     {contextForecastDate?.forecastToday?.map((detail: WeatherForecastDetails, index: number) => (
                         <WeatherForecastItem {...detail} key={index}/>
@@ -56,7 +54,7 @@ const WeatherForecast = () => {
                     )}
                     {activeIndex === 2 && (
                         <div className="carousel-item active">
-                            <div className="d-flex flex-wrap justify-content-around text-center align-items-center px-5 bg-body-tertiary" style={{ minHeight: '230px' }}>
+                            <div className="d-flex flex-wrap justify-content-around text-center align-items-center px-5 bg-body-tertiary" style={{ minHeight: '150px' }}>
                                 <div className="flex-column col-12 col-md-auto mb-3 item red-border">
                                     <p className="small"><strong>21°C</strong></p>
                                     <i className="fas fa-sun fa-2x mb-3" style={{ color: '#ddd' }}></i>

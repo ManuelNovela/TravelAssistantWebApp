@@ -12,7 +12,7 @@ import AuthModal from "../components/AuthModal/AuthModal";
 
 const Home = () => {
     const {isLoggedIn, setContextWeatherDate, handleCityChange} = useContext(DataContext);
-    const [city, setCity] = useState<string>('');
+    const [city, setCity] = useState<string>('Maputo');
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showLogin, setShowLogin] = useState<boolean>(false);
 
@@ -22,8 +22,10 @@ const Home = () => {
     }
     
     const {data, isLoading, isError, refetch } = useQuery(['weather', city], () => fetchWeather(city), {
-        enabled: false,
+        enabled: true,
     });
+    
+    refetch();
 
     const handleSearch = async () => {
         await refetch();
@@ -46,18 +48,17 @@ const Home = () => {
                 <AuthModal showLogin={showLogin} showModal={showModal} setShowModal={setShowModal}/>
                 <div className="row">
                     <div className="col-md-12">
-                        <h1>Assistente de Viagem</h1>
-                    </div>
+                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12 red-border">
+                    <div className="col-md-12">
                         <SearchBar setCity={setCity} city={city} handlerSearch={handleSearch} />
                     </div>
                 </div>
 
 
                 <div className="row">
-                    <div className="col-md-12 mb-5 red-border">
+                    <div className="col-md-12 mb-5">
                         <WeatherForecast/>
                         
                     </div>
@@ -102,10 +103,10 @@ const Home = () => {
                         </div>
                     )}
 
-                    <div className="col-md-6 red-border mb-5">
+                    <div className="col-md-6 mb-5">
                         <PopulationGDP/>
                     </div>
-                    <div className="col-md-6 red-border mb-5">
+                    <div className="col-md-6 mb-5">
                         <ExchangeRates/>
                     </div>
                 </div>
