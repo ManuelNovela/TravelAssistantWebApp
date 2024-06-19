@@ -1,3 +1,4 @@
+<img src="https://github.com/ManuelNovela/TravelAssistantWebApp/blob/main/screenshots/Experiencia%20de%20Busca.PNG"/>
 ### Travel Assistant - Frontend (React)
 
 This is the frontend repository for Travel Assistant, a React application that helps users find detailed information about cities, including population, GDP, weather forecast, and exchange rates.
@@ -10,7 +11,7 @@ To get started with the project:
 
     ```bash
     git clone https://github.com/ManuelNovela/TravelAssistantWebApp
-    cd travel-assistant-frontend
+    cd TravelAssistantWebApp
     ```
 
 2. Install dependencies:
@@ -47,3 +48,6 @@ Open your browser and visit http://localhost:5173 to see the application.
 ##Axios
 
 #### Screenshots
+
+<img src="https://github.com/ManuelNovela/TravelAssistantWebApp/blob/main/screenshots/Responsive.PNG">
+<img src="https://github.com/ManuelNovela/TravelAssistantWebApp/blob/main/screenshots/Conteudo%20Protegido.PNG">
