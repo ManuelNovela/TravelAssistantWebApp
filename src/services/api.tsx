@@ -23,10 +23,19 @@ api.interceptors.request.use(
   }
 );
 
+const sessionError = 'Session expired!';
 
 export const fetchExchangeRate = async (baseCurrency: string, targetCurrency: string): Promise<ExchangeRateData> => {
-  const response = await api.get<ApiResponse<ExchangeRateData>>(`/exchangerate/${baseCurrency}/${targetCurrency}`);
-  return response.data.data;
+  try{
+    const response = await api.get<ApiResponse<ExchangeRateData>>(`/exchangerate/${baseCurrency}/${targetCurrency}`);
+    return response.data.data;
+  
+  }catch (error) {
+    if (error.response && error.response.status === 403) {
+      removeToken();
+    }
+    throw new Error(sessionError);
+  }
 };
 
 export const fetchWeather = async (city: string): Promise<WeatherData> => {
@@ -48,23 +57,29 @@ export const useWeatherForecastQuery = (cityId: number): UseQueryResult<WeatherF
 };
 
 export const fetchPopulation = async (countryCode: string): Promise<PopulationData> => {
-  const response = await api.get<ApiResponse<PopulationData[]>>(`/population/${countryCode}`);
+  try{
+    const response = await api.get<ApiResponse<PopulationData[]>>(`/population/${countryCode}`);
+    const validData = response.data.data.filter(entry => entry.value !== null);
 
-  const validData = response.data.data.filter(entry => entry.value !== null);
+    if (validData.length === 0) {
+      throw new Error('No valid population data available');
+      }
+      const mostRecentData = validData.reduce((latest, entry) =>
+      latest.year > entry.year ? latest : entry
+    );
+    return mostRecentData;
 
-  if (validData.length === 0) {
-    throw new Error('No valid population data available');
+  }catch (error) {
+    if (error.response && error.response.status === 403) {
+      removeToken();
     }
-    const mostRecentData = validData.reduce((latest, entry) =>
-    latest.year > entry.year ? latest : entry
-  );
-
-return mostRecentData;
+    throw new Error(sessionError);
+  }
 };
 
 export const fetchPopulationGDP = async (countryCode: string): Promise<PopulationData> => {
+  try{
     const response = await api.get<ApiResponse<PopulationData[]>>(`/gdp/${countryCode}`);
-
     const validData = response.data.data.filter(entry => entry.value !== null);
 
     if (validData.length === 0) {
@@ -75,6 +90,13 @@ export const fetchPopulationGDP = async (countryCode: string): Promise<Populatio
     );
 
   return mostRecentData;
+
+  }catch (error) {
+    if (error.response && error.response.status === 403) {
+      removeToken();
+    }
+    throw new Error(sessionError);
+  }
 };
 
 export const saveToken = (token: string) => {

@@ -7,6 +7,7 @@ interface SearchBarProps {
   setCity: (city: string) => void;
   handlerSearch: () => void;
   isLoading: boolean;
+  isError: boolean;
 }
 
 const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
@@ -71,6 +72,17 @@ const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
               </div>
             </div>
           )}
+
+          {props.isLoading && (
+            <div className="d-flex justify-content-center mt-3">
+              <span className="visually-hidden">Carregando...</span>
+            </div>
+          )}
+
+        {props.isError && (
+          <span className='row d-flex text-center justify-content-center alert-danger mt-3 mb-4' style={{color:'red'}}> Erro ao buscar as informações </span>
+        )}    
+
 
           <ul className="list-group mt-3">
             {suggestions.map((suggestion, index) => (

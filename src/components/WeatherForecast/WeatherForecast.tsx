@@ -73,11 +73,11 @@ const WeatherForecast = () => {
                           <div>
                             <h2 className="text-dark display-2"><strong>
                               {contextWeatherDate?.currentTemperature ? (
-                                <>{Math.round(contextWeatherDate?.currentTemperature)}</>
+                                <>{Math.round(contextWeatherDate?.currentTemperature)+" °C"}</>
                               ) : (
                                 <>-</>
-                              )} °C</strong></h2>
-                            <p className="text-dark mb-0">{contextWeatherDate?.city}, {countryName}</p>
+                              )} </strong></h2>
+                            <p className="text-dark mb-0">{contextWeatherDate?.city+ contextWeatherDate?.city? ", " : ""} {countryName}</p>
                             <p className="text-dark mb-0">{contextWeatherDate?.description}</p>
                           </div>
                           <div>

@@ -11,7 +11,7 @@ import DataContext from "../services/context/DataContext";
 import AuthModal from "../components/AuthModal/AuthModal";
 
 const Home = () => {
-    const {isLoggedIn, setContextWeatherDate, handleCityChange} = useContext(DataContext);
+    const {isLoggedIn, handleCityChange} = useContext(DataContext);
     const [city, setCity] = useState<string>('');
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showLogin, setShowLogin] = useState<boolean>(false);
@@ -50,7 +50,7 @@ const Home = () => {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <SearchBar setCity={setCity} city={city} handlerSearch={handleSearch}  isLoading={isLoading}/>
+                        <SearchBar setCity={setCity} city={city} handlerSearch={handleSearch}  isLoading={isLoading} isError={isError}/>
                     </div>
                 </div>
 
