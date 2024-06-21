@@ -11,6 +11,7 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [countryValue, setCountryValue] = useState<string>("");
 
   const handleInputChange = async (inputValue: string) => {
     if (inputValue.length > 2) {
@@ -22,11 +23,12 @@ const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   };
   const handlerSugestion = async (suggestion: string) => {
     await props.setCity(suggestion);
+    setCountryValue(suggestion);
+    console.log("Buscando por "+ props.city);
     setSuggestions([]);
     props.handlerSearch();
   }
 
-  console.log(props?.isLoading);
 
   return (
     <div className="container mt-4 mb-5" style={{ minHeight: '150px' }}>
@@ -70,7 +72,7 @@ const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
             </div>
           )}
 
-          <ul className="list-group">
+          <ul className="list-group mt-3">
             {suggestions.map((suggestion, index) => (
               <li
                 key={index}
