@@ -52,28 +52,38 @@ export function ExchangeRates() {
                         <h6 className="flex-grow-1">Simulador</h6>
                         <div className='mt-2'>
                             <div> 
-                                {contextExchangeDate?.baseCurrency ?? "-"} 
                                 <input 
-                                    style={{marginRight: '10px', marginLeft: '10px', width: '60px' }}
+                                    style={{marginRight: '10px',
+                                        width: '60px',
+                                        textAlign: 'center',
+                                        borderRadius: '5px',
+                                        border: '1px solid #ccc'}}
                                     type='number' 
                                     min={0} 
                                     value={amountBuy} 
                                     onChange={handleBuyChange} 
                                 /> 
-                                = {amountBuyResult} {contextExchangeDate?.targetCurrency ?? "-"}
+                                {contextExchangeDate?.baseCurrency ?? "-"} 
+                                {" = "}
+                                {amountBuyResult} {contextExchangeDate?.targetCurrency ?? "-"}
                             </div>
                         </div>
                         <div className='mt-2'>
                             <div> 
-                                {contextExchangeDate?.targetCurrency ?? "-"} 
                                 <input 
-                                    style={{marginRight: '10px', marginLeft: '10px', width: '60px' }}
+                                    style={{marginRight: '10px',
+                                        width: '60px',
+                                        textAlign: 'center',
+                                        borderRadius: '5px',
+                                        border: '1px solid #ccc' }}
                                     type='number' 
                                     min={0} 
                                     value={amountSell} 
                                     onChange={handleSellChange} 
-                                /> 
-                                = {amountSellResult} {contextExchangeDate?.baseCurrency ?? "-"}
+                                />
+                                {contextExchangeDate?.targetCurrency ?? "-"} 
+                                {" = "}
+                                {amountSellResult} {contextExchangeDate?.baseCurrency ?? "-"}
                             </div>
                         </div>
                         <div className='mt-2'>
