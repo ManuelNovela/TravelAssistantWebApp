@@ -134,7 +134,7 @@ export const login = async (email: string, password: string): Promise<string> =>
     saveToken(token);
     return token;
   } catch (error) {
-     throw new Error('Login failed: ' + error.response?.data?.message ?? error.message);
+     throw new Error('Login failed: ' + error.response?.data?.message);
   }
 };
 
@@ -172,6 +172,6 @@ export const register = async (username: string, email: string, password: string
 
     return token;
   } catch (error) {
-    throw new Error('Registration failed: ' + error.response?.data?.message ?? error.message);
+    throw new Error('Registration failed: ' + error.response?.data?.message);
   }
 };
