@@ -46,7 +46,7 @@ export function PopulationGDP(){
                             <img src={GdpImage} width="100px" alt="Weather illustration" />
                         </div>
                         <h6 className="display-6 mb-0 font-weight-bold">{contextGDP?.value? formatNumber(contextGDP?.value) : "-"}</h6>
-                        <span className="small" style={{ color: '#868B94' }}>PIB de {contextGDP?.year} em USD</span>
+                        <span className="small" style={{ color: '#868B94' }}>PIB/Cap de {contextGDP?.year} em USD($)</span>
                     </div>
 
                 </div>

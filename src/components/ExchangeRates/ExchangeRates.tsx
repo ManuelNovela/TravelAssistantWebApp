@@ -87,7 +87,7 @@ export function ExchangeRates() {
                             </div>
                         </div>
                         <div className='mt-2'>
-                            <span>{contextExchangeDate?.targetCurrency} X * {contextExchangeDate?.rateAmountSell.toFixed(2) ?? "rate"}  = Y {contextExchangeDate?.baseCurrency ?? "-"} </span>
+                            <span className="small" style={{ color: '#868B94' }}>{contextExchangeDate?.targetCurrency} X * {contextExchangeDate?.rateAmountSell.toFixed(2) ?? "rate"}  = Y {contextExchangeDate?.baseCurrency ?? "-"} </span>
                         </div>
                     </div>
                     <div>
