@@ -95,6 +95,24 @@ export const logout = async (): Promise<string> => {
   }
 };
 
+export const fetchCityAutocomplete = async (inputValue: string): Promise<string[]> => {
+  try {
+    const response = await api.get<{ status: string; data: { predictions: { description: string }[] } }>(
+      `/autocomplete/${inputValue}`
+    );
+
+    if (response.data.status === 'SUCCESS') {
+      const predictions = response.data.data.predictions.map(prediction => prediction.description);
+      return predictions;
+    } else {
+      throw new Error('Failed to fetch city autocomplete');
+    }
+  } catch (error) {
+    console.error('Error fetching city autocomplete:', error);
+    return [];
+  }
+};
+
 export const login = async (email: string, password: string): Promise<string> => {
   try {
     const response = await api.post<{ status: string, message: string | null, data: { name: string, token: string } }>('/auth/login', {

@@ -50,7 +50,7 @@ const Home = () => {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <SearchBar setCity={setCity} city={city} handlerSearch={handleSearch} />
+                        <SearchBar setCity={setCity} city={city} handlerSearch={handleSearch}  isLoading={isLoading}/>
                     </div>
                 </div>
 

@@ -19,7 +19,7 @@ const WeatherForecast = () => {
           const apiKey = '44462409-d3a04b0fdc12a2b59ce324aae';
           const country = contextWeatherDate?.city ?? 'weather';
           const url = `https://pixabay.com/api/?key=${apiKey}&q=${country}&image_type=photo`;
-    
+          
           try {
             const response = await fetch(url);
             const data = await response.json();
@@ -37,6 +37,7 @@ const WeatherForecast = () => {
         fetchImage();
       }, [contextWeatherDate?.city]);
 
+      const iconUrl = contextWeatherDate ? `https://openweathermap.org/img/wn/${contextWeatherDate.icon}@4x.png` : 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-weather/ilu3.webp';
 
     return (
         <div>
@@ -80,10 +81,7 @@ const WeatherForecast = () => {
                             <p className="text-dark mb-0">{contextWeatherDate?.description}</p>
                           </div>
                           <div>
-                            <img
-                              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-weather/ilu3.webp"
-                              width="150px"
-                              alt="Weather icon"
+                            <img src={iconUrl} width="150px" alt="Weather icon"
                             />
                           </div>
                         </div>

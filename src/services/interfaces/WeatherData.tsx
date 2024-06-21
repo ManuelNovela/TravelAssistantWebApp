@@ -4,4 +4,5 @@ export interface WeatherData {
     city: string;
     currentTemperature: number;
     currentDescription: string;
+    icon: string;
 }
